@@ -1,0 +1,56 @@
+Opening Screen:
+
+Select game from drop down list. (Initially only "Connect 4" will be available.)
+
+A joining passphrase entry field should also be present. No need to hide the contents.
+
+When a game type is selected, the buttons will become active depending on some server variables:
+(For each game type, these variables will exist)
+	MaxTotalGames
+	StartedGames
+	UnstartedGames
+
+if (MaxTotalGames < (StartedGames + UnstartedGames))
+	Allow Create
+if (UnstartedGames > 0)
+	Allow Join
+
+Click button to "Create" or "Join" selected type of game.
+
+Create Button: Go to screen "Create" passing {Game Type}
+
+Join Button: CheckPassphrase(Game Type, Game ID number, joining passphrase)
+		if correct, Go to screen "Join" passing {Game Type, Game ID number, joining passphrase}
+		else Go to screen "Retry Passphrase" passing {Game Type, Game ID number}
+
+--------------------------
+Create screen: only available if (MaxTotalGames < (StartedGames + UnstartedGames))
+
+Prompts user to set the joining passphrase (can be blank). 
+This needs to be entered in two input fields and they need to match, or the user can't proceed.
+
+
+Create button: 	execute CreatesNewGameInstance(GameType, GameID, Passphrase)
+		Go to "Join" page, automatically passing {Game Type, Game index number, joining passphrase}
+
+Cancel button: 	return to opening screen.
+
+
+
+---------------------------
+Join screen: only available if (UnstartedGames > 0)
+
+Display a drop down list of available unclaimed player IDs for the specified game.
+Selecting this should make this player ID unavailable to other players trying to join.
+
+A player nickname entry field should be present to assign a nickname to the specified player.
+
+A "Ready" button which should save the nickname and player ID and set a ready flag on the player.
+
+A "Start Game" button should be present which only becomes available when the required number of player positions have been claimed by joining players, and all the players that have joined are ready.
+
+A "Leave Game" button which should deallocate the selected player ID making it available to other joining players.
+	It should then return to the opening screen.
+
+
+
